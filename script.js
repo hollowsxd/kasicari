@@ -50,8 +50,8 @@ function fetchSheetData(sheetId) {
 
 // Function to display the search bar once the sheet is loaded
 function displaySearchBar(sheetData) {
-    // Store sheet data for searching (in this case, we assume the first column is address/phone number)
-    window.sheetData = sheetData.map(row => row[0]);
+    // Store sheet data for searching (in this case, we assume the fourth column is address/phone number)
+    window.sheetData = sheetData;
 
     // Display search bar and hide the URL input section
     document.getElementById('search-container').style.display = 'block';
@@ -59,9 +59,9 @@ function displaySearchBar(sheetData) {
     // Set up search functionality
     document.getElementById('search-bar').addEventListener('input', function() {
         const query = this.value.toLowerCase();
-        const filteredData = window.sheetData.filter(item =>
-            item.toLowerCase().includes(query)
-        );
+        const filteredData = window.sheetData.filter(row => {
+            return row.some(cell => cell.toLowerCase().includes(query)); // Search through all columns
+        });
         displaySearchResults(filteredData);
     });
 }
@@ -69,14 +69,20 @@ function displaySearchBar(sheetData) {
 // Function to display the search results
 function displaySearchResults(results) {
     const resultList = document.getElementById('search-results');
-    resultList.innerHTML = '';
+    resultList.innerHTML = ''; // Clear previous results
 
     if (results.length > 0) {
-        results.forEach(item => {
-            const listItem = document.createElement('li');
-            listItem.classList.add('list-group-item');
-            listItem.textContent = item;
-            resultList.appendChild(listItem);
+        results.forEach(row => {
+            const cardHTML = `
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">${row[0]}</h5> <!-- Assuming first column is name -->
+                                <h6 class="card-subtitle mb-2 text-muted">${row[1]}</h6> <!-- Assuming second column is phone -->
+                                <p class="card-text">${row.slice(2).join(' | ')}</p> <!-- Show remaining columns -->
+                            </div>
+                        </div>
+                    `;
+            resultList.innerHTML += cardHTML; // Add card to container
         });
     } else {
         resultList.innerHTML = '<li class="list-group-item">No results found.</li>';
