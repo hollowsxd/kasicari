@@ -15,14 +15,12 @@
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
+            overflow: hidden; /* Prevent scroll bar on body */
         }
 
         .container {
             margin-top: 20px;
-        }
-
-        .card-columns {
-            column-count: 3;
+            max-width: 100%;
         }
 
         .card {
@@ -49,6 +47,41 @@
             color: #333;
         }
 
+        .card-subtitle {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+            color: #495057;
+        }
+
+        .card-footer {
+            font-size: 0.8rem;
+            color: #007bff;
+            border-top: 1px solid #e9ecef;
+            padding-top: 10px;
+        }
+
+        #loading {
+            display: none;
+        }
+
+        #search-container {
+            display: none;
+            position: relative;
+        }
+
+        #url-input {
+            text-align: center;
+        }
+
+        /* Make the search results scrollable */
+        #search-results {
+            max-height: 60vh; /* Limit the height of the result container */
+            overflow-y: auto; /* Make it scrollable */
+        }
         .card-subtitle {
             font-size: 1rem;
             color: #6c757d;
@@ -103,7 +136,7 @@
         <!-- Search Bar & Results -->
         <div id="search-container">
             <input type="text" class="form-control mb-3" id="search-bar" placeholder="Cari!"> 
-            <div id="search-results" class="row">
+            <div id="search-results" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
                 <!-- Search results will be displayed here -->
             </div>
         </div>
