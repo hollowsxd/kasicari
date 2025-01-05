@@ -24,8 +24,16 @@
         }
 
         /* Center the content horizontally and vertically */
-        #url-input, #search-container {
+        #url-input {
             display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        #search-container {
+            display: none;  /* Initially hidden */
             justify-content: center;
             align-items: center;
             width: 100%;
@@ -102,10 +110,9 @@
         </div>
 
         <!-- Google Sheet URL input -->
-        <div id="url-input">
-            <input type="text" class="form-control mb-3" id="sheet-url" placeholder="Enter Google Sheets URL/ID">
-            <button class="btn btn-primary ms-2" id="load-sheet">Load!</button>
-            <p id="error-message" class="text-danger mt-2"></p>
+        <div id="url-input" class="input-group mb-3">
+            <input type="text" class="form-control" id="sheet-url" placeholder="Enter Google Sheets URL/ID">
+            <button class="btn btn-primary" id="load-sheet">Load!</button>
         </div>
 
         <!-- Loading Indicator -->
