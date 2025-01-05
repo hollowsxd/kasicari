@@ -50,7 +50,7 @@ function fetchSheetData(sheetId) {
 
 // Function to display the search bar once the sheet is loaded
 function displaySearchBar(sheetData) {
-    // Store sheet data for searching (in this case, we assume the fourth column is address/phone number)
+    // Store sheet data for searching
     window.sheetData = sheetData;
 
     // Display search bar and hide the URL input section
@@ -79,14 +79,14 @@ function displaySearchResults(results) {
             const cardBodyContent = row.slice(4).map(item => item).join('<br>'); // // Join all other column values with line breaks
 
             const cardHTML = `
-                        <div class="col-12 col-md-4 mb-4">
-                            <div class="card" style="width: 18rem;">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                            <div class="card" style="width: 100%;">
                                 <div class="card-body">
                                     <h5 class="card-title">${cardTitle}</h5> <!-- Column C as title -->
                                     <h6 class="card-subtitle mb-2 text-muted">${cardSubtitle}</h6> <!-- Column D as subtitle -->
                                     <p class="card-text">${cardBodyContent}</p> <!-- Column E onwards as body with line breaks -->
                                     <div class="card-footer text-end">
-                                        <a href="#" class="card-link">More info</a>
+                                        <a href="#" class="card-link">Gambar</a>
                                     </div>
                                 </div>
                             </div>
