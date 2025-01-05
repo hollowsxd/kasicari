@@ -68,23 +68,30 @@ function displaySearchBar(sheetData) {
 
 // Function to display the search results
 function displaySearchResults(results) {
-    const resultList = document.getElementById('search-results');
-    resultList.innerHTML = ''; // Clear previous results
+    const resultContainer = document.getElementById('search-results');
+    resultContainer.innerHTML = ''; // Clear previous results
 
     if (results.length > 0) {
         results.forEach(row => {
+            // Assuming Column C (index 2) is the title
+            const cardTitle = row[2]; // Column C is the title
+            const cardSubtitle = row[3]; // Column D is the subtitle
+            const cardBodyContent = row.slice(4).join('<br>'); // Rest of the columns starting from Column E
+
             const cardHTML = `
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">${row[0]}</h5> <!-- Assuming first column is name -->
-                                <h6 class="card-subtitle mb-2 text-muted">${row[1]}</h6> <!-- Assuming second column is phone -->
-                                <p class="card-text">${row.slice(2).join(' | ')}</p> <!-- Show remaining columns -->
+                        <div class="col-12 col-md-4 mb-4">
+                            <div class="card" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">${cardTitle}</h5> <!-- Column C as title -->
+                                    <h6 class="card-subtitle mb-2 text-muted">${cardSubtitle}</h6> <!-- Column D as subtitle -->
+                                    <p class="card-text">${cardBodyContent}</p> <!-- Column E onwards as body -->
+                                </div>
                             </div>
                         </div>
                     `;
-            resultList.innerHTML += cardHTML; // Add card to container
+            resultContainer.innerHTML += cardHTML; // Add card to container
         });
     } else {
-        resultList.innerHTML = '<li class="list-group-item">No results found.</li>';
+        resultContainer.innerHTML = '<div class="col-12"><p class="text-center">No results found.</p></div>';
     }
 }
