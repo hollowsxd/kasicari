@@ -54,7 +54,7 @@ function displaySearchBar(sheetData) {
     window.sheetData = sheetData;
 
     // Display search bar and hide the URL input section
-    document.getElementById('search-container').style.display = 'block';
+    document.getElementById('search-container').style.display = 'flex';
 
     // Set up search functionality
     document.getElementById('search-bar').addEventListener('input', function() {
