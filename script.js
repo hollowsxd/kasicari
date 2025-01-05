@@ -76,7 +76,7 @@ function displaySearchResults(results) {
             // Assuming Column C (index 2) is the title
             const cardTitle = row[2]; // Column C is the title
             const cardSubtitle = row[3]; // Column D is the subtitle
-            const cardBodyContent = row.slice(4).join('<br>'); // Rest of the columns starting from Column E
+            const cardBodyContent = row.slice(4).map(item => item).join('<br>'); // // Join all other column values with line breaks
 
             const cardHTML = `
                         <div class="col-12 col-md-4 mb-4">
@@ -84,7 +84,10 @@ function displaySearchResults(results) {
                                 <div class="card-body">
                                     <h5 class="card-title">${cardTitle}</h5> <!-- Column C as title -->
                                     <h6 class="card-subtitle mb-2 text-muted">${cardSubtitle}</h6> <!-- Column D as subtitle -->
-                                    <p class="card-text">${cardBodyContent}</p> <!-- Column E onwards as body -->
+                                    <p class="card-text">${cardBodyContent}</p> <!-- Column E onwards as body with line breaks -->
+                                    <div class="card-footer text-end">
+                                        <a href="#" class="card-link">More info</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
