@@ -66,7 +66,7 @@ function displaySearchBar(sheetData) {
     });
 }
 
-// Function to display the search results
+// Function to display the search results in multiple columns
 function displaySearchResults(results) {
     const resultContainer = document.getElementById('search-results');
     resultContainer.innerHTML = ''; // Clear previous results
@@ -74,24 +74,33 @@ function displaySearchResults(results) {
     if (results.length > 0) {
         results.forEach(row => {
             // Assuming Column C (index 2) is the title
-            const cardTitle = row[2]; // Column C is the title
-            const cardSubtitle = row[3]; // Column D is the subtitle
-            const cardBodyContent = row.slice(4).map(item => item).join('<br>'); // // Join all other column values with line breaks
+            const cardTitle = row[2];   // Column C as the title
+            const cardSubtitle = row[3]; // Column D as the subtitle
 
+            // Join all other column values with line breaks, starting from Column E
+            const cardBodyContent = row.slice(4, 7).map(item => item).join('<br>');  // From Column E to G
+
+            // Extract Column H (index 7) for the link in the footer
+            const cardLink = row[7];  // Column H as the link in the footer
+
+            // Check if there's a valid link in Column H
+            const cardLinkHTML = cardLink ? `<a href="${cardLink}" target="_blank" class="card-link">Gambar</a>` : '';
+
+            // Create the HTML for the card
             const cardHTML = `
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                            <div class="card" style="width: 100%;">
-                                <div class="card-body">
-                                    <h5 class="card-title">${cardTitle}</h5> <!-- Column C as title -->
-                                    <h6 class="card-subtitle mb-2 text-muted">${cardSubtitle}</h6> <!-- Column D as subtitle -->
-                                    <p class="card-text">${cardBodyContent}</p> <!-- Column E onwards as body with line breaks -->
-                                    <div class="card-footer text-end">
-                                        <a href="#" class="card-link">Gambar</a>
-                                    </div>
-                                </div>
+                <div class="col mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">${cardTitle}</h5> <!-- Column C as title -->
+                            <h6 class="card-subtitle mb-2 text-muted">${cardSubtitle}</h6> <!-- Column D as subtitle -->
+                            <p class="card-text">${cardBodyContent}</p> <!-- Column E to G as body with line breaks -->
+                            <div class="card-footer text-end">
+                                ${cardLinkHTML} <!-- Column H as link -->
                             </div>
                         </div>
-                    `;
+                    </div>
+                </div>
+            `;
             resultContainer.innerHTML += cardHTML; // Add card to container
         });
     } else {
