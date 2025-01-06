@@ -4,49 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KasiCari!</title>
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
-            overflow: hidden; /* Prevent scroll bar on body */
-        }
-
-        .container {
-            margin-top: 20px;
-            max-width: 100%;
-        }
-
-        /* Center the content horizontally and vertically */
-        #url-input {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        #search-container {
-            display: none;  /* Initially hidden */
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        /* Style for the input elements */
-        .form-control {
-            max-width: 500px; /* Limit width */
-            width: 100%;
         }
 
         .card {
             border: none;
-            margin-bottom: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s ease-in-out;
@@ -55,11 +24,6 @@
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-body {
-            background-color: #ffffff;
-            padding: 20px;
         }
 
         .card-title {
@@ -85,56 +49,48 @@
             padding-top: 10px;
         }
 
-        #loading {
-            display: none;
-        }
-
-        /* Make the search results scrollable */
         #search-results {
             max-height: 60vh; /* Limit the height of the result container */
             overflow-y: auto; /* Make it scrollable */
         }
-
-        #search-results .col {
-            margin-bottom: 20px;
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="text-center">
+    <div class="container py-5">
+        <!-- Header Section -->
+        <div class="text-center mb-4">
             <h1 class="display-4">KasiCari!</h1>
             <p class="lead">Jom kita cari.</p>
         </div>
 
-        <!-- Google Sheet URL input -->
-        <div id="url-input" class="input-group mb-3">
-            <input type="text" class="form-control" id="sheet-url" placeholder="Enter Google Sheets URL/ID">
+        <!-- Google Sheet URL Input -->
+        <div id="url-input" class="input-group mb-3 justify-content-center">
+            <input type="text" class="form-control w-50" id="sheet-url" placeholder="Enter Google Sheets URL/ID">
             <button class="btn btn-primary" id="load-sheet">Load!</button>
-            <p id="error-message" class="text-danger mt-2"></p>
         </div>
+        <p id="error-message" class="text-danger text-center"></p>
 
         <!-- Loading Indicator -->
-        <div id="loading" class="alert alert-info" role="alert">
+        <div id="loading" class="alert alert-info text-center d-none" role="alert">
             Loading data from Google Sheets...
         </div>
 
         <!-- Search Bar Container -->
-        <div id="search-container">
-            <input type="text" class="form-control mb-3" id="search-bar" placeholder="Cari!">
+        <div id="search-container" class="d-none text-center">
+            <input type="text" class="form-control w-50 mx-auto mb-3" id="search-bar" placeholder="Cari!">
         </div>
 
         <!-- Search Results -->
-        <div id="search-results" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-            <!-- Search results will be displayed here -->
+        <div id="search-results" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+            <!-- Cards will be dynamically loaded here -->
         </div>
     </div>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     
-    <!-- Own JS -->
+    <!-- Custom JS -->
     <script src="script.js"></script>
 </body>
 </html>
