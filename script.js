@@ -1,22 +1,24 @@
-document.getElementById('load-sheet').addEventListener('click', function() {
+document.getElementById('load-sheet').addEventListener('click', function () {
     const sheetUrl = document.getElementById('sheet-url').value.trim();
     const errorMessageElement = document.getElementById('error-message');
     errorMessageElement.textContent = ''; // Clear previous error message
+
     if (!sheetUrl) {
         errorMessageElement.textContent = 'Please enter a valid Google Sheets URL or ID.';
         return;
     }
 
     // Display loading message
-    document.getElementById('loading').style.display = 'block';
+    document.getElementById('loading').classList.remove('d-none');
 
     // Extract the Google Sheet ID from the URL if it's a full URL
-    const sheetId = sheetUrl.includes('docs.google.com/spreadsheets/d/') ?
-        sheetUrl.split('/d/')[1].split('/')[0] : sheetUrl;
+    const sheetId = sheetUrl.includes('docs.google.com/spreadsheets/d/')
+        ? sheetUrl.split('/d/')[1].split('/')[0]
+        : sheetUrl;
 
     // Check if the sheet ID is valid (simple validation)
     if (!sheetId) {
-        document.getElementById('loading').style.display = 'none';
+        document.getElementById('loading').classList.add('d-none');
         errorMessageElement.textContent = 'Invalid Google Sheets URL or ID.';
         return;
     }
@@ -33,7 +35,7 @@ function fetchSheetData(sheetId) {
         .then(response => response.json())
         .then(data => {
             // Hide loading message
-            document.getElementById('loading').style.display = 'none';
+            document.getElementById('loading').classList.add('d-none');
 
             if (data && data.values && data.values.length > 0) {
                 displaySearchBar(data.values);
@@ -42,7 +44,7 @@ function fetchSheetData(sheetId) {
             }
         })
         .catch(error => {
-            document.getElementById('loading').style.display = 'none';
+            document.getElementById('loading').classList.add('d-none');
             document.getElementById('error-message').textContent = 'Error loading the sheet. Please try again.';
             console.error('Error fetching data:', error);
         });
@@ -54,10 +56,10 @@ function displaySearchBar(sheetData) {
     window.sheetData = sheetData;
 
     // Display search bar and hide the URL input section
-    document.getElementById('search-container').style.display = 'flex';
+    document.getElementById('search-container').classList.remove('d-none');
 
     // Set up search functionality
-    document.getElementById('search-bar').addEventListener('input', function() {
+    document.getElementById('search-bar').addEventListener('input', function () {
         const query = this.value.toLowerCase();
         const filteredData = window.sheetData.filter(row => {
             return row.some(cell => cell.toLowerCase().includes(query)); // Search through all columns
@@ -74,29 +76,31 @@ function displaySearchResults(results) {
     if (results.length > 0) {
         results.forEach(row => {
             // Assuming Column C (index 2) is the title
-            const cardTitle = row[2];   // Column C as the title
-            const cardSubtitle = row[3]; // Column D as the subtitle
+            const cardTitle = row[2] || 'No Title'; // Column C as the title
+            const cardSubtitle = row[3] || 'No Subtitle'; // Column D as the subtitle
 
             // Join all other column values with line breaks, starting from Column E
-            const cardBodyContent = row.slice(4, 7).map(item => item).join('<br>');  // From Column E to G
+            const cardBodyContent = row.slice(4, 7).map(item => item || 'N/A').join('<br>'); // Columns E to G
 
             // Extract Column H (index 7) for the link in the footer
-            const cardLink = row[7];  // Column H as the link in the footer
+            const cardLink = row[7]; // Column H as the link in the footer
 
             // Check if there's a valid link in Column H
-            const cardLinkHTML = cardLink ? `<a href="${cardLink}" target="_blank" class="card-link">Gambar</a>` : '';
+            const cardLinkHTML = cardLink
+                ? `<a href="${cardLink}" target="_blank" class="card-link">Gambar</a>`
+                : '';
 
             // Create the HTML for the card
             const cardHTML = `
-                <div class="col mb-4">
-                    <div class="card">
+                <div class="col">
+                    <div class="card h-100">
                         <div class="card-body">
-                            <h5 class="card-title">${cardTitle}</h5> <!-- Column C as title -->
-                            <h6 class="card-subtitle mb-2 text-muted">${cardSubtitle}</h6> <!-- Column D as subtitle -->
-                            <p class="card-text">${cardBodyContent}</p> <!-- Column E to G as body with line breaks -->
-                            <div class="card-footer text-end">
-                                ${cardLinkHTML} <!-- Column H as link -->
-                            </div>
+                            <h5 class="card-title">${cardTitle}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">${cardSubtitle}</h6>
+                            <p class="card-text">${cardBodyContent}</p>
+                        </div>
+                        <div class="card-footer text-end">
+                            ${cardLinkHTML}
                         </div>
                     </div>
                 </div>
