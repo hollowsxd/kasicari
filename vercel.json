@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "env": {
+    "GOOGLE_SHEETS_API_KEY": "@google_sheets_api_key"
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/$1"
+    }
+  ]
+}
