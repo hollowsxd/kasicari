@@ -1,7 +1,5 @@
 {
   "version": 2,
-  "env": {
-    "GOOGLE_SHEETS_API_KEY": "GOOGLE_SHEETS_API_KEY"
   },
   "rewrites": [
     {
