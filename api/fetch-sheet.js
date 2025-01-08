@@ -12,6 +12,8 @@ module.exports = async (req, res) => {
         return res.status(400).json({ error: 'Sheet ID is required' });
     }
 
+    console.log('Using API Key:', apiKey); // Debug: Verify API key
+
     const apiUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1?key=${apiKey}`;
 
     try {
