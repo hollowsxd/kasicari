@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
     }
 
     const { sheetId } = req.query;
-    const apiKey = process.env.GOOGLE_SHEETS_API_KEY;
+    const apiKey = process.env.gsapi;
 
     if (!sheetId) {
         return res.status(400).json({ error: 'Sheet ID is required' });
