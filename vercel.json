@@ -2,6 +2,6 @@
   "version": 2,
   "rewrites": [
     { "source": "/", "destination": "/middleware/login.js" },
-    { "source": "/api/fetch", "destination": "/api/fetch.js" }
+    { "source": "/api/fetch-sheet", "destination": "/api/fetch-sheet.js" }
   ]
 }
