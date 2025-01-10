@@ -23,7 +23,7 @@ function middleware(req) {
 
   // Allow access to index.html after login
   if (isLoggedIn && pathname === '/login') {
-    url.pathname = '/index.html'; // Redirect to index
+    url.pathname = '/index'; // Redirect to index
     return NextResponse.redirect(url);
   }
 
