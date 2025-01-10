@@ -5,6 +5,12 @@ module.exports = async (req, res) => {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
+    // Check for the `auth` cookie
+    const auth = req.headers.cookie?.split('; ').find(cookie => cookie.startsWith('auth='));
+    if (!auth || auth.split('=')[1] !== 'true') {
+        return res.status(401).json({ error: 'Unauthorized access. Please log in.' });
+    }
+
     const { sheetId } = req.query;
     const apiKey = process.env.gsapi;
 
