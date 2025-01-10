@@ -1,22 +1,33 @@
 import { NextResponse } from 'next/server';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-export function middleware(req) {
-  const url = req.nextUrl.clone();
+// Define __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Middleware function
+export async function middleware(req) {
   const { pathname } = req.nextUrl;
 
-  // Check if the user is logged in
-  const isLoggedIn = req.cookies.get('loggedIn') === 'true';
-
-  // If not logged in and not already on login.html, redirect to login.html
-  if (!isLoggedIn && pathname !== '/login.html') {
-    url.pathname = '/login.html';
-    return NextResponse.redirect(url);
+  // Skip API routes
+  if (pathname.startsWith('/api')) {
+    return NextResponse.next();
   }
 
-  // If logged in and accessing login.html, redirect to index.html
+  // Check for logged-in status in cookies
+  const isLoggedIn = req.cookies.get('loggedIn') === 'true';
+
+  // Redirect not-logged-in users to login.html
+  if (!isLoggedIn && pathname !== '/login.html') {
+    const loginUrl = new URL('/login.html', req.url);
+    return NextResponse.redirect(loginUrl);
+  }
+
+  // Redirect logged-in users to index.html when they try to access login.html
   if (isLoggedIn && pathname === '/login.html') {
-    url.pathname = '/index.html';
-    return NextResponse.redirect(url);
+    const indexUrl = new URL('/index.html', req.url);
+    return NextResponse.redirect(indexUrl);
   }
 
   // Allow access to all other routes
