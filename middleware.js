@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server';
+const { NextResponse } = require('next/server');
 
 // Define your password
 const PASSWORD = process.env.APP_PASSWORD;
 
 // Middleware function
-export function middleware(req) {
+function middleware(req) {
   const url = req.nextUrl.clone();
   const { pathname } = req.nextUrl;
 
@@ -29,3 +29,5 @@ export function middleware(req) {
 
   return NextResponse.next(); // Allow access
 }
+
+module.exports = { middleware };
