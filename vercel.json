@@ -1,15 +1,7 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "login.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "login.js"
-    }
+  "rewrites": [
+    { "source": "/", "destination": "/middleware/login.js" },
+    { "source": "/api/fetch", "destination": "/api/fetch.js" }
   ]
 }
