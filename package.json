@@ -10,7 +10,7 @@
   "dependencies": {
     "axios": "^1.4.0",
     "express": "^4.21.2"
-    "cookie-parser": "^1.4.7",
+    "cookie-parser": "^1.4.7"
     "dotenv": "^16.0.3",
   },
   "devDependencies": {
