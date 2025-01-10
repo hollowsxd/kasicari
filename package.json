@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A Sheet searcher.",
   "main": "middleware/login.js",
+  "type": "module",
   "scripts": {
     "start": "node middleware/login.js",
     "dev": "nodemon middleware/login.js"
