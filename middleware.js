@@ -4,15 +4,6 @@ export function middleware(req) {
   const url = req.nextUrl.clone();
   const { pathname } = req.nextUrl;
 
-  // Skip API routes and static assets
-  if (
-    pathname.startsWith('/api') ||
-    pathname.endsWith('.js') ||
-    pathname.endsWith('.ico')
-  ) {
-    return NextResponse.next();
-  }
-
   // Check if the user is logged in
   const isLoggedIn = req.cookies.get('loggedIn') === 'true';
 
