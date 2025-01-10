@@ -1,18 +1,22 @@
-const { NextResponse } = require('next/server');
+import { NextResponse } from 'next/server';
 
-function middleware(req) {
+export function middleware(req) {
   const url = req.nextUrl.clone();
   const { pathname } = req.nextUrl;
 
   // Skip API routes and static assets
-  if (pathname.startsWith('/api') || pathname.endsWith('.js') || pathname.endsWith('.ico')) {
+  if (
+    pathname.startsWith('/api') ||
+    pathname.endsWith('.js') ||
+    pathname.endsWith('.ico')
+  ) {
     return NextResponse.next();
   }
 
-  // Check if user is logged in using cookies
+  // Check if the user is logged in
   const isLoggedIn = req.cookies.get('loggedIn') === 'true';
 
-  // If not logged in and not on login.html, redirect to login.html
+  // If not logged in and not already on login.html, redirect to login.html
   if (!isLoggedIn && pathname !== '/login.html') {
     url.pathname = '/login.html';
     return NextResponse.redirect(url);
@@ -24,8 +28,6 @@ function middleware(req) {
     return NextResponse.redirect(url);
   }
 
-  // Allow access
+  // Allow access to all other routes
   return NextResponse.next();
 }
-
-module.exports = middleware;
