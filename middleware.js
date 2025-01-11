@@ -4,6 +4,11 @@ export default function middleware(req) {
   const url = req.nextUrl.clone();
   const isLoggedIn = req.cookies.get('loggedIn') === 'true';
 
+  // Exclude API routes from middleware logic
+  if (pathname.startsWith('/api')) {
+    return NextResponse.next();
+  }
+
   if (!isLoggedIn && url.pathname !== '/login.html') {
     url.pathname = '/login.html';
     return NextResponse.redirect(url);
