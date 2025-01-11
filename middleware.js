@@ -1,35 +1,30 @@
-import { NextResponse } from 'next/server';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { NextResponse } from '@vercel/edge';
 
-// Define __dirname
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// Middleware configuration
+export const config = {
+  matcher: [
+    '/((?!api|favicon.ico|login.html).*)', // Apply middleware to all paths except API, static files, and login.html
+  ],
+};
 
-// Middleware function
-export async function middleware(req) {
+export default function middleware(req) {
   const { pathname } = req.nextUrl;
+  const loggedIn = req.cookies.get('loggedIn') === 'true';
 
-  // Skip API routes
-  if (pathname.startsWith('/api')) {
-    return NextResponse.next();
-  }
-
-  // Check for logged-in status in cookies
-  const isLoggedIn = req.cookies.get('loggedIn') === 'true';
-
-  // Redirect not-logged-in users to login.html
-  if (!isLoggedIn && pathname !== '/login.html') {
-    const loginUrl = new URL('/login.html', req.url);
+  // Redirect to login.html if not logged in
+  if (!loggedIn && pathname !== '/login.html') {
+    const loginUrl = req.nextUrl.clone();
+    loginUrl.pathname = '/login.html';
     return NextResponse.redirect(loginUrl);
   }
 
-  // Redirect logged-in users to index.html when they try to access login.html
-  if (isLoggedIn && pathname === '/login.html') {
-    const indexUrl = new URL('/index.html', req.url);
+  // Redirect to index.html if already logged in and trying to access login.html
+  if (loggedIn && pathname === '/login.html') {
+    const indexUrl = req.nextUrl.clone();
+    indexUrl.pathname = '/index.html';
     return NextResponse.redirect(indexUrl);
   }
 
-  // Allow access to all other routes
+  // Allow access to all other paths
   return NextResponse.next();
 }
