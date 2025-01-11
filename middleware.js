@@ -8,23 +8,18 @@ export const config = {
 };
 
 export default function middleware(req) {
-  const { pathname } = req.nextUrl;
-  const loggedIn = req.cookies.get('loggedIn') === 'true';
+  const url = req.nextUrl.clone();
+  const isLoggedIn = req.cookies.get('loggedIn') === 'true';
 
-  // Redirect to login.html if not logged in
-  if (!loggedIn && pathname !== '/login.html') {
-    const loginUrl = req.nextUrl.clone();
-    loginUrl.pathname = '/login.html';
-    return NextResponse.redirect(loginUrl);
+  if (!isLoggedIn && url.pathname !== '/login.html') {
+    url.pathname = '/login.html';
+    return NextResponse.redirect(url);
   }
 
-  // Redirect to index.html if already logged in and trying to access login.html
-  if (loggedIn && pathname === '/login.html') {
-    const indexUrl = req.nextUrl.clone();
-    indexUrl.pathname = '/index.html';
-    return NextResponse.redirect(indexUrl);
+  if (isLoggedIn && url.pathname === '/login.html') {
+    url.pathname = '/index.html';
+    return NextResponse.redirect(url);
   }
 
-  // Allow access to all other paths
   return NextResponse.next();
 }
