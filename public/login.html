@@ -17,11 +17,37 @@
 
         <!-- Password Input -->
         <div id="password-input">
-            <form action="/api/login" method="POST" class="input-group mb-3 justify-content-center">
+            <form id="pass-input" action="/api/login" method="POST" class="input-group mb-3 justify-content-center">
                 <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
                 <button type="submit" class="btn btn-primary">Login</button>
             </form>
         </div>
+
+        <div id="error-message" class="text-danger mt-2"></div>
+
+<script>
+  document.getElementById('pass-input').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: new URLSearchParams(formData),
+      });
+
+      if (response.ok) {
+        window.location.href = '/index.html';
+      } else {
+        const result = await response.json();
+        document.getElementById('error-message').textContent = result.error || 'Login failed. Please try again.';
+      }
+    } catch (error) {
+      document.getElementById('error-message').textContent = 'An error occurred. Please try again.';
+    }
+  });
+</script>
     </div>
 </body>
 </html>
