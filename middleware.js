@@ -12,14 +12,14 @@ export default function middleware(req) {
   if (!isLoggedIn && pathname !== '/login.html') {
     const loginUrl = req.nextUrl.clone();
     loginUrl.pathname = '/login.html';
-    return NextResponse.rewrite(loginUrl); // Temporary redirect to login page
+    return NextResponse.redirect(loginUrl); // Temporary redirect to login page
   }
 
   // Redirect authenticated users away from the login page to the index
   if (isLoggedIn && pathname === '/login.html') {
     const indexUrl = req.nextUrl.clone();
     indexUrl.pathname = '/index.html';
-    return NextResponse.rewrite(indexUrl); // Redirect to index.html
+    return NextResponse.redirect(indexUrl, 302); // Redirect to index.html
   }
 
   return NextResponse.next();
