@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-export  config = {
+export const config = {
   matcher: ['/((?!api|favicon.ico).*)'],
 };
 
