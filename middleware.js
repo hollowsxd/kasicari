@@ -4,8 +4,8 @@ export default function middleware(req) {
   const url = req.nextUrl.clone();
   const isLoggedIn = req.cookies.get('loggedIn') === 'true';
 
-  // Exclude API routes from middleware logic
-  if (pathname.startsWith('/api')) {
+  // Exclude API routes and favicon.ico from middleware logic
+  if (pathname.startsWith('/api') || pathname === '/favicon.ico') {
     return NextResponse.next();
   }
 
