@@ -19,7 +19,8 @@ module.exports = async (req, res) => {
       const cookie = serialize('loggedIn', 'true', {
         path: '/',
         httpOnly: true,
-        sameSite: 'strict',
+        sameSite: 'none',
+        secure: true,
         maxAge: 3600, // 1 hour
       });
       res.setHeader('Set-Cookie', cookie);
