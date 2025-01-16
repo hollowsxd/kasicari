@@ -26,7 +26,7 @@ export default function middleware(req) {
     console.log('User is already logged in. Redirecting to index.html...');
     const indexUrl = req.nextUrl.clone();
     indexUrl.pathname = '/index.html';
-    return NextResponse.redirect(indexUrl, 302); // Redirect to index.html
+    return NextResponse.redirect(indexUrl, 307); // Redirect to index.html
   }
 
   console.log('Allowing access to requested path.');
