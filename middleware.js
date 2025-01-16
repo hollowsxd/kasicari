@@ -8,6 +8,8 @@ export default function middleware(req) {
   const { pathname } = req.nextUrl;
   const isLoggedIn = req.cookies.get('loggedIn') === 'true';
 
+  console.log(`Middleware triggered for path: ${pathname}`);
+
   // Log the cookie value
   console.log(`Is user logged in? ${isLoggedIn}`);
 
